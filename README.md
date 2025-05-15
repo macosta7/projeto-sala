@@ -1,106 +1,11 @@
-# 🏫 Checkin Room
+# Models 🎲
 
-Sistema web para automação do processo de **reserva de salas em ambientes acadêmicos**. A plataforma possibilita que estudantes, professores e coordenadores verifiquem a disponibilidade de salas em tempo real, realizem reservas com antecedência e recebam notificações automáticas quando a solicitação for aprovada ou recusada. Administradores têm acesso a um painel de controle com gestão de solicitações.
+O model faz a ligação com o banco de dados e quando o controller precisa de algum dado ele vai no model buscar
 
----
+# Controllers 🕹️
 
-## ✅ Funcionalidades
+O controller faz a ligação entre um endpoint e o model, basicamente, o endpoint vai fazer uma solicitação, o controller vai analisar essa solicitação e realizar a função para que aquela solicitação seja atendida, para isso, o controller vai até o model buscar os dados necessários para que a função seja realizada e depois o controller vai retornar o resultado daquela ação para o endpoint.
 
-- Login para diferentes perfis de usuário (aluno, professor, coordenador, recepção)
-- Cadastro e edição de dados pessoais
-- Consulta de horários disponíveis por sala
-- Realização de reservas com data e horário
-- Painel administrativo com aprovações de solicitações
-- Notificações automáticas para usuários
-- Testes unitários com Jest
+# Endpoints 👩‍💻
 
----
-
-## 📁 Estrutura de Pastas
-
-mvc-boilerplate/      
-│      
-├── config/ # Configurações, como conexão com o banco de dados     
-│ └── db.js     
-├── controllers/ # Lógica das requisições HTTP     
-│ └── aboutController.js      
-│ └── contactController.js      
-│ └── homeController.js      
-│ └── userController.js      
-├── models/ # Definições das entidades do banco (ORM ou SQL)       
-│ └── userModel.js       
-├── routes/ # Arquivos de rotas do sistema       
-│ └── index.js      
-│ └── frontRoutes.js       
-│ └── userRoutes.js       
-├── services/ # Funções reutilizáveis e lógicas de negócio        
-│ └── userService.js        
-├── assets/ # Imagens, fontes e arquivos públicos       
-├── scripts/ # Scripts JS públicos (front-end)       
-├── public/      
-│ └── css/       
-│ └─────style.css # Estilos CSS      
-├── tests/ # Testes unitários com Jest      
-│ └── userController.test.js      
-│ └── userModel.test.js     
-│ └── userRoutes.test.js       
-│ └── userService.test.js       
-├── views/ # Vizualização da aplicação       
-├── .gitignore # Arquivos/ pastas ignorados pelo Git       
-├── .env # Variáveis de ambiente       
-├── jest.config.js # Configuração do Jest para testes      
-├── package-lock.json # Lockfile do npm     
-├── package.json # Dependências e scripts do Node.js      
-├── PI-WAD.md # Arquivo da documentação do projeto     
-├── readme.md # Documentação do projeto      
-├── server.js # Inicialização do servidor Express      
-└── rest.http # Arquivo opcional para testes de API via VSCode      
-
-## ▶️ Como Executar o Projeto Localmente
-
-### 🔧 Pré-requisitos
-
-- [Node.js](https://nodejs.org/)
-- Banco de dados PostgreSQL ou Supabase
-- Um terminal compatível com comandos `npm`
-
----
-
-### ⚙️ Instalação
-
-1. **Clone o repositório**
-
-```bash
-git clone https://github.com/macosta7/mvc-boilerplate.git
-cd mvc-boilerplate 
-```  
-
-2. **Instale as dependências**
-```bash
-npm install
-npm init -y
-npm install express ejs
-```  
-
-### 🗃️ Inicializar o Banco de Dados
-
-Antes de rodar a aplicação, inicialize o banco com o comando:
-
-```bash
-npm run init-db
-```
-
-### 🚀 Executar o Servidor
-
-1. Inicie a aplicação com:
-
-```bash
-node app.js
-```
-
-2. O servidor estará rodando em:
-
-```arduino
-http://localhost:3000
-```
-
+O endpoint vai pedir que algo aconteça, ele vai fazer uma solicitação de uma tarefa, por exemplo, ai o controller vai executar essa solicitação e depois vai retornar para o endpoint. No caso do projeto, o view vai mostrar as informações para o usuário, quando o usuário quiser adicionar um aluno, por exemplo, ele vai colocar as informações daquele aluno e apertar o botão Adicionar, ao fazer isso temos um endpoint, essa solicitação de adicionar aluno vai ser enviada para o controller, que vai buscar os dados no model, depois vai realizar a função de adicionar o aluno e devolver que o aluno foi adicionado para que o view possa exibir na tela do usuário que aquele usuário foi adicionado.
