@@ -1,45 +1,19 @@
-CREATE TABLE usuarios (
-  id_usuario SERIAL PRIMARY KEY,
-  nm_usuario TEXT NOT NULL,
-  email_usuario TEXT UNIQUE NOT NULL,
-  ocupacao_usuario TEXT NOT NULL CHECK (ocupacao_usuario IN ('aluno', 'professor', 'coordenador', 'recepcao')),
-  senha_usuario TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS aluno (
+  id SERIAL PRIMARY KEY,
+  nome TEXT NOT NULL,
+  email TEXT NOT NULL,
+  criado_em TIMESTAMP DEFAULT NOW()
 );
-
-CREATE TABLE salas (
-  id_sala SERIAL PRIMARY KEY,
-  nm_sala TEXT NOT NULL
+CREATE INDEX IF NOT EXISTS idx_aluno_email ON aluno (email);
+  CREATE TABLE IF NOT EXISTS curso (
+  id SERIAL PRIMARY KEY,
+  nome TEXT NOT NULL
 );
-
-CREATE TABLE horarios (
-  id_horario SERIAL PRIMARY KEY,
-  id_sala INT REFERENCES salas(id_sala) ON DELETE CASCADE,
-  horario_inicio TIME NOT NULL,
-  horario_fim TIME NOT NULL,
-  dia_semana TEXT NOT NULL CHECK (dia_semana IN ('segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo'))
-);
-
-CREATE TABLE reservas (
-  id_reserva SERIAL PRIMARY KEY,
-  id_usuario INT REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-  id_sala INT REFERENCES salas(id_sala) ON DELETE CASCADE,
-  data_reserva DATE NOT NULL,
-  id_horario INT REFERENCES horarios(id_horario) ON DELETE CASCADE,
-  status_reserva TEXT NOT NULL CHECK (status_reserva IN ('pendente', 'aprovada', 'rejeitada'))
-);
-
-CREATE TABLE notificacoes (
-  id_notificacao SERIAL PRIMARY KEY,
-  id_usuario INT REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-  id_reserva INT REFERENCES reservas(id_reserva) ON DELETE CASCADE,
-  mensagem_notificacao TEXT NOT NULL,
-  visualizada_notificacao BOOLEAN DEFAULT FALSE,
-  data_notificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
+ALTER TABLE aluno
+ADD COLUMN IF NOT EXISTS curso_id INTEGER,
+ADD CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE SET NULL;
 CREATE TABLE professor (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   email VARCHAR(150) NOT NULL
 );
-
