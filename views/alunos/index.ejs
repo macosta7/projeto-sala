@@ -2,86 +2,453 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão de Alunos e Cursos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --success: #10b981;
+      --success-hover: #059669;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --radius: 0.5rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.5;
+      color: var(--gray-800);
+      background-color: var(--gray-50);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      color: var(--gray-900);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-header {
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .card-description {
+      color: var(--gray-500);
+      margin-top: 0.25rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    th {
+      background-color: var(--gray-100);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: var(--gray-50);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-control {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      color: var(--gray-800);
+      background-color: white;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--gray-300);
+      color: var(--gray-700);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--gray-100);
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .edit-form {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .edit-form input {
+      width: auto;
+      min-width: 150px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 2rem;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: var(--gray-200);
+      margin: 2rem 0;
+    }
+
+    .nav-tab {
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-tab:hover {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
+
+      .edit-form {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .edit-form input {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Alunos Cadastrados</h1>
+  <div class="container">
+    <h1>Sistema de Gestão Acadêmica</h1>
 
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Curso</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% alunos.forEach(aluno => { %>
-        <tr>
-          <td><%= aluno.nome %></td>
-          <td><%= aluno.email %></td>
-          <td><%= aluno.curso || "Sem curso" %></td>
-          <td>
-            <form action="/alunos/delete/<%= aluno.id %>" method="POST" style="display:inline;">
-              <button type="submit">Deletar</button>
-            </form>
-            <form action="/alunos/edit/<%= aluno.id %>" method="POST" style="display:inline;">
-              <input name="nome" placeholder="Novo nome" required />
-              <input name="email" placeholder="Novo email" required />
-              <button type="submit">Editar</button>
-            </form>
-          </td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+    <div class="tabs">
+      <div class="tab active" onclick="openTab('alunos')">Alunos</div>
+      <div class="tab" onclick="openTab('cursos')">Cursos</div>
+      <a href="/professores" class="nav-tab">Professores</a>
+    </div>
 
-  <h2>Cadastrar Novo Aluno</h2>
-  <form action="/alunos" method="POST">
-    <input name="nome" placeholder="Nome" required />
-    <input name="email" placeholder="Email" required />
-    <select name="curso_id">
-      <option value="">Selecione um curso</option>
-      <% cursos.forEach(curso => { %>
-        <option value="<%= curso.id %>"><%= curso.nome %></option>
-      <% }); %>
-    </select>
-    <button type="submit">Cadastrar</button>
-  </form>
+    <div id="alunos" class="tab-content active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Alunos Cadastrados</div>
+          <div class="card-description">Visualize, edite ou remova os alunos cadastrados no sistema.</div>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Curso</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% alunos.forEach(aluno => { %>
+              <tr>
+                <td><%= aluno.nome %></td>
+                <td><%= aluno.email %></td>
+                <td><%= aluno.curso || "Sem curso" %></td>
+                <td>
+                  <div class="actions">
+                    <form action="/alunos/delete/<%= aluno.id %>" method="POST">
+                      <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                    </form>
+                    <form action="/alunos/edit/<%= aluno.id %>" method="POST" class="edit-form">
+                      <input name="nome" placeholder="Novo nome" required />
+                      <input name="email" placeholder="Novo email" required />
+                      <button type="submit" class="btn btn-outline btn-sm">Editar</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
 
-  <hr>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Cadastrar Novo Aluno</div>
+          <div class="card-description">Preencha os campos abaixo para adicionar um novo aluno ao sistema.</div>
+        </div>
+        
+        <form action="/alunos" method="POST">
+          <div class="form-row">
+            <div class="form-control">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" placeholder="Nome completo" required />
+            </div>
+            <div class="form-control">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="email@exemplo.com" required />
+            </div>
+            <div class="form-control">
+              <label for="curso">Curso</label>
+              <select id="curso" name="curso_id">
+                <option value="">Selecione um curso</option>
+                <% cursos.forEach(curso => { %>
+                  <option value="<%= curso.id %>"><%= curso.nome %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar Aluno</button>
+        </form>
+      </div>
+    </div>
 
-  <h2>Cursos Cadastrados</h2>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Nome do Curso</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% cursos.forEach(curso => { %>
-        <tr>
-          <td><%= curso.nome %></td>
-          <td>
-            <form action="/cursos/delete/<%= curso.id %>" method="POST" style="display:inline;">
-              <button type="submit">Deletar</button>
-            </form>
-            <form action="/cursos/edit/<%= curso.id %>" method="POST" style="display:inline;">
-              <input name="nome" placeholder="Novo nome do curso" required />
-              <button type="submit">Editar</button>
-            </form>
-          </td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+    <div id="cursos" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Cursos Cadastrados</div>
+          <div class="card-description">Visualize, edite ou remova os cursos disponíveis no sistema.</div>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Nome do Curso</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cursos.forEach(curso => { %>
+              <tr>
+                <td><%= curso.nome %></td>
+                <td>
+                  <div class="actions">
+                    <form action="/cursos/delete/<%= curso.id %>" method="POST">
+                      <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                    </form>
+                    <form action="/cursos/edit/<%= curso.id %>" method="POST" class="edit-form">
+                      <input name="nome" placeholder="Novo nome do curso" required />
+                      <button type="submit" class="btn btn-outline btn-sm">Editar</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
 
-  <h3>Adicionar Novo Curso</h3>
-  <form action="/cursos" method="POST">
-    <input name="nome" placeholder="Nome do curso" required />
-    <button type="submit">Cadastrar</button>
-  </form>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Adicionar Novo Curso</div>
+          <div class="card-description">Preencha o campo abaixo para adicionar um novo curso ao sistema.</div>
+        </div>
+        
+        <form action="/cursos" method="POST">
+          <div class="form-row">
+            <div class="form-control">
+              <label for="nome_curso">Nome do Curso</label>
+              <input id="nome_curso" name="nome" placeholder="Nome do curso" required />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar Curso</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabName) {
+      // Hide all tab contents
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Deactivate all tabs
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Activate the selected tab and content
+      document.getElementById(tabName).classList.add('active');
+      document.querySelector(`.tab[onclick="openTab('${tabName}')"]`).classList.add('active');
+    }
+  </script>
 </body>
 </html>
